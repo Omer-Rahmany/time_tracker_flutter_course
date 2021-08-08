@@ -21,15 +21,29 @@ class CustomElevatedButton extends StatelessWidget {
     return SizedBox(
       height: height,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: color,
-          elevation: 2.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(borderRadius),
-            ),
-          ),
-        ),
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.disabled)) return color;
+              return color;
+            }),
+            foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.disabled)) return color;
+              return color;
+            }),
+            elevation: MaterialStateProperty.resolveWith<double>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.pressed)) return 2.0;
+              return 2.0;
+            }),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(borderRadius),
+                ),
+              ),
+            )),
         child: child,
         onPressed: onPressed,
       ),
