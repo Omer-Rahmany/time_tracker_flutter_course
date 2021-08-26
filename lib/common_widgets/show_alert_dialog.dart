@@ -11,7 +11,7 @@ Future<bool> showAlertDialog(
   cancelActionText,
 }) {
   if (!Platform.isIOS) {
-    return showDialog<void>(
+    return showDialog<bool>(
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
