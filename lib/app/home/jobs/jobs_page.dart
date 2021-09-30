@@ -1,27 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:time_tracker_flutter_course/app/home/jobs/add_job_page.dart';
+import 'package:time_tracker_flutter_course/app/home/job_entries/job_entries_page.dart';
+import 'package:time_tracker_flutter_course/app/home/jobs/edit_job_page.dart';
+import 'package:time_tracker_flutter_course/app/home/jobs/job_list_tile.dart';
+import 'package:time_tracker_flutter_course/app/home/jobs/list_items_builder.dart';
 import 'package:time_tracker_flutter_course/app/home/models/job.dart';
-import 'package:time_tracker_flutter_course/common_widgets/show_alert_dialog.dart';
-import 'package:time_tracker_flutter_course/services/auth.dart';
+import 'package:time_tracker_flutter_course/common_widgets/show_exception_alert_dialog.dart';
 import 'package:time_tracker_flutter_course/services/database.dart';
 
 class JobsPage extends StatelessWidget {
-  Future<void> _signOut(BuildContext context) async {
-    final auth = Provider.of<AuthBase>(context, listen: false);
-    await auth.signOut();
-  }
-
-  Future<void> _confirmSignOut(BuildContext context) async {
-    final didRequestSignOut = await showAlertDialog(
-      context,
-      title: 'Logout',
-      content: 'Are you sure that you want to logout?',
-      defaultActionText: 'Logout',
-      cancelActionText: 'Cancel',
-    );
-    if (didRequestSignOut) {
-      await _signOut(context);
+  Future<void> _delete(BuildContext context, job) async {
+    final database = Provider.of<Database>(context, listen: false);
+    try {
+      await database.deleteJob(job);
+    } on FirebaseException catch (e) {
+      showExceptionAlertDialog(
+        context,
+        title: 'Operation failed',
+        exception: e,
+      );
     }
   }
 
@@ -33,21 +31,14 @@ class JobsPage extends StatelessWidget {
           'Jobs',
         ),
         actions: [
-          TextButton(
-            onPressed: () => _confirmSignOut(context),
-            child: Text(
-              'Logout',
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.white,
-              ),
+          IconButton(
+            onPressed: () => EditJobPage.show(
+              context,
+              database: Provider.of<Database>(context, listen: false),
             ),
+            icon: Icon(Icons.add),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => AddJobPage.show(context),
-        child: Icon(Icons.add),
       ),
       body: buildContents(context),
     );
@@ -58,17 +49,22 @@ class JobsPage extends StatelessWidget {
     return StreamBuilder<List<Job>>(
       stream: database.jobsStream(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final jobs = snapshot.data;
-          final children = jobs.map((job) => Text(job.name)).toList();
-          return ListView(
-            children: children,
-          );
-        }
-        if (snapshot.hasError) {
-          return Center(child: Text('Some error occurred'));
-        }
-        return Center(child: CircularProgressIndicator());
+        return ListItemsBuilder<Job>(
+          snapshot: snapshot,
+          itemBuilder: (context, job) => Dismissible(
+            key: Key('job-${job.id}'),
+            background: Container(color: Colors.red),
+            direction: DismissDirection.endToStart,
+            onDismissed: (direction) => _delete(context, job),
+            child: JobListTile(
+              job: job,
+              onTap: () => JobEntriesPage.show(
+                context,
+                job,
+              ),
+            ),
+          ),
+        );
       },
     );
   }

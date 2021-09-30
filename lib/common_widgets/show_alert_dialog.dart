@@ -13,7 +13,7 @@ Future<bool> showAlertDialog(
   if (!Platform.isIOS) {
     return showDialog<bool>(
       context: context,
-      builder: (BuildContext dialogContext) {
+      builder: (BuildContext context) {
         return AlertDialog(
           title: Text(title),
           content: Text(content),
@@ -26,7 +26,7 @@ Future<bool> showAlertDialog(
             TextButton(
               child: Text(defaultActionText),
               onPressed: () {
-                Navigator.of(dialogContext).pop(true);
+                Navigator.of(context).pop(true);
               },
             ),
           ],
@@ -43,7 +43,7 @@ Future<bool> showAlertDialog(
             actions: <Widget>[
               if (cancelActionText != null)
                 TextButton(
-                    onPressed: () => Navigator.of(context).pop(false),
+                    onPressed: () => Navigator.of(dialogContext).pop(false),
                     child: Text(cancelActionText)),
               TextButton(
                 child: Text(defaultActionText),
