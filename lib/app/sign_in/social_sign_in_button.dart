@@ -3,11 +3,11 @@ import 'package:time_tracker_flutter_course/common_widgets/custom_elevated_butto
 
 class SocialSignInButton extends CustomElevatedButton {
   SocialSignInButton({
-    @required String assetName,
-    @required String text,
-    Color color,
-    Color textColor,
-    VoidCallback onPressed,
+    required String assetName,
+    required String text,
+    Color? color,
+    Color? textColor,
+    VoidCallback? onPressed,
   })  : assert(assetName != null),
         assert(text != null),
         super(

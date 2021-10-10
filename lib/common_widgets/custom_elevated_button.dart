@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 class CustomElevatedButton extends StatelessWidget {
   CustomElevatedButton(
       {this.child,
-      this.color,
+      required this.color,
       this.borderRadius: 2.0,
       this.height: 50.0,
       this.onPressed})
       : assert(borderRadius != null);
 
-  final Widget child;
-  final Color color;
+  final Widget? child;
+  final Color? color;
   final double borderRadius;
   final double height;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +23,11 @@ class CustomElevatedButton extends StatelessWidget {
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.resolveWith<Color>(
                 (Set<MaterialState> states) {
-              if (states.contains(MaterialState.disabled)) return color;
-              return color;
+              return color ?? Colors.amber;
             }),
             foregroundColor: MaterialStateProperty.resolveWith<Color>(
                 (Set<MaterialState> states) {
-              if (states.contains(MaterialState.disabled)) return color;
-              return color;
+              return color ?? Colors.red;
             }),
             elevation: MaterialStateProperty.resolveWith<double>(
                 (Set<MaterialState> states) {

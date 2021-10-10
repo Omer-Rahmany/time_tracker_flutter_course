@@ -5,7 +5,7 @@ import 'package:time_tracker_flutter_course/app/sign_in/email_sign_in_model.dart
 import 'package:time_tracker_flutter_course/services/auth.dart';
 
 class EmailSignInBloc {
-  EmailSignInBloc({@required this.auth});
+  EmailSignInBloc({required this.auth});
 
   final AuthBase auth;
   final StreamController<EmailSignInModel> _modelController =
@@ -43,11 +43,11 @@ class EmailSignInBloc {
   }
 
   void updateWith({
-    String email,
-    String password,
-    EmailSignInFormType formType,
-    bool isLoading,
-    bool submitted,
+    String? email,
+    String? password,
+    EmailSignInFormType? formType,
+    bool? isLoading,
+    bool? submitted,
   }) {
     // update model
     _model = _model.copyWith(

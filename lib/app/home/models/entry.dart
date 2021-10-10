@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 
 class Entry {
   Entry({
-    @required this.id,
-    @required this.jobId,
-    @required this.start,
-    @required this.end,
-    this.comment,
+    required this.id,
+    required this.jobId,
+    required this.start,
+    required this.end,
+    required this.comment,
   });
 
   String id;
@@ -18,7 +18,10 @@ class Entry {
   double get durationInHours =>
       end.difference(start).inMinutes.toDouble() / 60.0;
 
-  factory Entry.fromMap(Map<dynamic, dynamic> value, String id) {
+  factory Entry.fromMap(Map<dynamic, dynamic>? value, String id) {
+    if (value == null) {
+      throw StateError('missing data for entryId: $id');
+    }
     final int startMilliseconds = value['start'];
     final int endMilliseconds = value['end'];
     return Entry(

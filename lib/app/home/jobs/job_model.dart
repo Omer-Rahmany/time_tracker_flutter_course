@@ -10,7 +10,7 @@ enum JobFormType {
 
 class JobModel with NameAndRatePerHourValidators, ChangeNotifier {
   JobModel({
-    @required this.database,
+    required this.database,
     this.id,
     this.name = '',
     this.ratePerHour = -1,
@@ -20,7 +20,7 @@ class JobModel with NameAndRatePerHourValidators, ChangeNotifier {
   });
   final Database database;
 
-  String id;
+  String? id;
   String name;
   int ratePerHour;
   bool isLoading;
@@ -35,12 +35,12 @@ class JobModel with NameAndRatePerHourValidators, ChangeNotifier {
       nameValidator.isValid(name) &&
       ratePerHourValidator.isValid(ratePerHour);
 
-  String get nameErrorText {
+  String? get nameErrorText {
     bool showErrorText = submitted && !nameValidator.isValid(name);
     return showErrorText ? invalidNameErrorText : null;
   }
 
-  String get ratePerHourErrorText {
+  String? get ratePerHourErrorText {
     bool showErrorText =
         submitted && !ratePerHourValidator.isValid(ratePerHour);
     return showErrorText ? invalidRatePerHourErrorText : null;
@@ -73,12 +73,12 @@ class JobModel with NameAndRatePerHourValidators, ChangeNotifier {
   void updateFormType(JobFormType formType) => updateWith(formType: formType);
 
   void updateWith({
-    String id,
-    String name,
-    int ratePerHour,
-    bool isLoading,
-    bool submitted,
-    JobFormType formType,
+    String? id,
+    String? name,
+    int? ratePerHour,
+    bool? isLoading,
+    bool? submitted,
+    JobFormType? formType,
   }) {
     this.id = id ?? this.id;
     this.name = name ?? this.name;
@@ -89,10 +89,10 @@ class JobModel with NameAndRatePerHourValidators, ChangeNotifier {
     notifyListeners();
   }
 
-  void updateWithJob({Job job}) {
-    this.id = job.id ?? this.id;
-    this.name = job.name ?? this.name;
-    this.ratePerHour = job.ratePerHour ?? this.ratePerHour;
+  void updateWithJob({required Job job}) {
+    this.id = job.id;
+    this.name = job.name;
+    this.ratePerHour = job.ratePerHour;
     notifyListeners();
   }
 }

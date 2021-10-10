@@ -4,7 +4,7 @@ import 'package:time_tracker_flutter_course/common_widgets/show_alert_dialog.dar
 import 'package:time_tracker_flutter_course/services/auth.dart';
 
 class AccountPage extends StatelessWidget {
-  const AccountPage({Key key}) : super(key: key);
+  const AccountPage({Key? key}) : super(key: key);
 
   Future<void> _signOut(BuildContext context) async {
     final auth = Provider.of<AuthBase>(context, listen: false);
@@ -19,7 +19,7 @@ class AccountPage extends StatelessWidget {
       defaultActionText: 'Logout',
       cancelActionText: 'Cancel',
     );
-    if (didRequestSignOut) {
+    if (didRequestSignOut == true) {
       await _signOut(context);
     }
   }

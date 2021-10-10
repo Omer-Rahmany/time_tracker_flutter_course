@@ -5,7 +5,7 @@ import 'package:time_tracker_flutter_course/app/home/jobs/jobs_page.dart';
 import 'package:time_tracker_flutter_course/app/home/tab_item.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();

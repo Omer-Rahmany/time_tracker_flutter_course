@@ -5,11 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:time_tracker_flutter_course/services/auth.dart';
 
 class SignInManager {
-  SignInManager({@required this.auth, @required this.isLoading});
+  SignInManager({required this.auth, required this.isLoading});
   final AuthBase auth;
   final ValueNotifier isLoading;
 
-  Future<User> _signIn(Future<User> Function() signInMethod) async {
+  Future<User?> _signIn(Future<User?> Function() signInMethod) async {
     try {
       isLoading.value = true;
       return await signInMethod();
@@ -19,12 +19,12 @@ class SignInManager {
     }
   }
 
-  Future<User> signInAnonymously() async =>
+  Future<User?> signInAnonymously() async =>
       await _signIn(() => auth.signInAnonymously());
 
-  Future<User> signInWithGoogle() async =>
+  Future<User?> signInWithGoogle() async =>
       await _signIn(() => auth.signInWithGoogle());
 
-  Future<User> signInWithFacebook() async =>
+  Future<User?> signInWithFacebook() async =>
       await _signIn(() => auth.signInWithFacebook());
 }

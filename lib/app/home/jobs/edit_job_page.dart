@@ -8,15 +8,15 @@ import 'package:time_tracker_flutter_course/common_widgets/show_exception_alert_
 import 'package:time_tracker_flutter_course/services/database.dart';
 
 class EditJobPage extends StatefulWidget {
-  const EditJobPage({Key key, @required this.model, this.job})
+  const EditJobPage({Key? key, required this.model, this.job})
       : super(key: key);
   final JobModel model;
-  final Job job;
+  final Job? job;
 
   static Future<void> show(
     BuildContext context, {
-    Database database,
-    Job job,
+      required Database database,
+    Job? job,
   }) async {
     await Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
       builder: (context) => ChangeNotifierProvider<JobModel>(
@@ -65,7 +65,7 @@ class _EditJobPageState extends State<EditJobPage> {
 
   bool _validateAndSaveForm() {
     final form = _formKey.currentState;
-    if (form.validate()) {
+    if (form!.validate()) {
       form.save();
       return true;
     } else {
@@ -158,7 +158,7 @@ class _EditJobPageState extends State<EditJobPage> {
     return TextFormField(
       initialValue: model.name,
       decoration: InputDecoration(labelText: 'Job name'),
-      onSaved: (value) => model.updateWith(name: value),
+      onSaved: (value) => model.updateWith(name: value!),
       validator: (value) {
         if (model.nameErrorText == null) {
           _nameEditingComplete();
@@ -183,7 +183,7 @@ class _EditJobPageState extends State<EditJobPage> {
         decimal: false,
       ),
       onSaved: (value) =>
-          model.updateWith(ratePerHour: int.tryParse(value) ?? 0),
+          model.updateWith(ratePerHour: int.tryParse(value!) ?? 0),
       focusNode: _ratePerHourFocusNode,
       enabled: model.isLoading == false,
       validator: (value) =>

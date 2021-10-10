@@ -7,7 +7,7 @@ import 'package:time_tracker_flutter_course/common_widgets/show_exception_alert_
 import 'package:time_tracker_flutter_course/services/auth.dart';
 
 class EmailSignInFormChangeNotifier extends StatefulWidget {
-  EmailSignInFormChangeNotifier({@required this.model});
+  EmailSignInFormChangeNotifier({required this.model});
   final EmailSignInChangeModel model;
 
   static Widget create(BuildContext context) {

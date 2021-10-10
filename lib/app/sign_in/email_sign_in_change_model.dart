@@ -5,7 +5,7 @@ import 'package:time_tracker_flutter_course/services/auth.dart';
 
 class EmailSignInChangeModel with EmailAndPasswordValidators, ChangeNotifier {
   EmailSignInChangeModel({
-    @required this.auth,
+    required this.auth,
     this.email = '',
     this.password = '',
     this.formType = EmailSignInFormType.signIn,
@@ -29,12 +29,12 @@ class EmailSignInChangeModel with EmailAndPasswordValidators, ChangeNotifier {
       !isLoading &&
       emailValidator.isValid(email) &&
       passwordValidator.isValid(password);
-  String get passwordErrorText {
+  String? get passwordErrorText {
     bool showErrorText = submitted && !passwordValidator.isValid(password);
     return showErrorText ? invalidPasswordErrorText : null;
   }
 
-  String get emailErrorText {
+  String? get emailErrorText {
     bool showErrorText = submitted && !emailValidator.isValid(email);
     return showErrorText ? invalidEmailErrorText : null;
   }
@@ -71,11 +71,11 @@ class EmailSignInChangeModel with EmailAndPasswordValidators, ChangeNotifier {
   }
 
   void updateWith({
-    String email,
-    String password,
-    EmailSignInFormType formType,
-    bool isLoading,
-    bool submitted,
+    String? email,
+    String? password,
+    EmailSignInFormType? formType,
+    bool? isLoading,
+    bool? submitted,
   }) {
     this.email = email ?? this.email;
     this.password = password ?? this.password;

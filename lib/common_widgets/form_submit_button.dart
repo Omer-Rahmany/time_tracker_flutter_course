@@ -3,8 +3,8 @@ import 'package:time_tracker_flutter_course/common_widgets/custom_elevated_butto
 
 class FormSubmitButton extends CustomElevatedButton {
   FormSubmitButton({
-    @required String text,
-    VoidCallback onPressed,
+    required String text,
+    VoidCallback? onPressed,
   }) : super(
           child: Text(
             text,
