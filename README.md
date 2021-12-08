@@ -25,3 +25,4 @@ The setup steps are also explained in the course.
 # time_tracker_flutter_course
 # time_tracker_flutter_course
 # time_tracker_flutter_course
+# time_tracker_flutter_course
