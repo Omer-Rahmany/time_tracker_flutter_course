@@ -21,3 +21,4 @@ The setup steps are also explained in the course.
 
 ### [License: MIT](LICENSE.md)
 
+# time_tracker_flutter_course
